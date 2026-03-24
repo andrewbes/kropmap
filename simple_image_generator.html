@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Генератор зображень</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            margin: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #8b7355;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #6b5b47;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Генератор зображень для карти Кропивницького</h2>
+    <p>Натисніть кнопки для створення та завантаження зображень:</p>
+
+    <button onclick="generateStreetImage()">Створити зображення вулиці</button>
+    <button onclick="generateSquareImage()">Створити зображення площі</button>
+
+    <div id="canvases"></div>
+
+    <script>
+        function generateStreetImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 300;
+            const ctx = canvas.getContext('2d');
+
+            // Фон
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, '#f0ead6');
+            gradient.addColorStop(1, '#e6d7c3');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 300);
+
+            // Дорога
+            ctx.fillStyle = '#d4c4a8';
+            ctx.fillRect(0, 120, 400, 60);
+
+            // Лінії на дорозі
+            ctx.strokeStyle = '#8b7355';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 10]);
+            ctx.beginPath();
+            ctx.moveTo(0, 150);
+            ctx.lineTo(400, 150);
+            ctx.stroke();
+
+            // Будинки
+            ctx.fillStyle = '#c9b896';
+            ctx.fillRect(50, 80, 80, 40);
+            ctx.fillRect(150, 70, 90, 50);
+            ctx.fillRect(250, 85, 75, 35);
+            ctx.fillRect(320, 75, 60, 45);
+
+            // Вікна
+            ctx.fillStyle = '#8b7355';
+            ctx.fillRect(60, 90, 15, 15);
+            ctx.fillRect(80, 90, 15, 15);
+            ctx.fillRect(160, 80, 15, 15);
+            ctx.fillRect(180, 80, 15, 15);
+            ctx.fillRect(200, 80, 15, 15);
+
+            // Текст
+            ctx.fillStyle = '#8b7355';
+            ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Вулиця Велика Перспективна', 200, 250);
+
+            // Показуємо canvas
+            document.getElementById('canvases').appendChild(canvas);
+
+            // Завантажуємо
+            const link = document.createElement('a');
+            link.download = 'street_main.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.8);
+            link.click();
+        }
+
+        function generateSquareImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 300;
+            const ctx = canvas.getContext('2d');
+
+            // Фон
+            const gradient = ctx.createRadialGradient(200, 150, 0, 200, 150, 200);
+            gradient.addColorStop(0, '#f0ead6');
+            gradient.addColorStop(1, '#d4c4a8');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 300);
+
+            // Центральна площа
+            ctx.fillStyle = '#e6d7c3';
+            ctx.beginPath();
+            ctx.arc(200, 150, 80, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Пам'ятник в центрі
+            ctx.fillStyle = '#8b7355';
+            ctx.fillRect(190, 120, 20, 60);
+            ctx.fillRect(185, 110, 30, 20);
+
+            // Дерева навколо
+            ctx.fillStyle = '#6b5b47';
+            ctx.beginPath();
+            ctx.arc(120, 100, 15, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(280, 100, 15, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(120, 200, 15, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(280, 200, 15, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Текст
+            ctx.fillStyle = '#8b7355';
+            ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Площа Героїв Майдану', 200, 250);
+
+            // Показуємо canvas
+            document.getElementById('canvases').appendChild(canvas);
+
+            // Завантажуємо
+            const link = document.createElement('a');
+            link.download = 'square_heroes.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.8);
+            link.click();
+        }
+    </script>
+</body>
+
+</html>

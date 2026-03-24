@@ -1,0 +1,36 @@
+[
+  {
+    "id": "vulytsia-velyka-perspektyvna",
+    "lat": 48.5098,
+    "lng": 32.2647,
+    "title": "Вулиця Велика Перспективна",
+    "subtitle": "Видатні місця Кропивницького",
+    "description": "Одна з головних вулиць міста з численними кафе, магазинами та офісами. Тут зручно починати прогулянку центром, знайомитись з архітектурою та робити фото знакових локацій.",
+    "type": "landmark",
+    "icon": "🏛️",
+    "template": "streets/sampleStreet.html",
+    "footerText": "© Мапа Кропивницького, Імя Призвище учна",
+    "images": [
+      "/images/streets/sampleStreet/image1.jpg",
+      "/images/streets/sampleStreet/image2.jpg",
+      "/images/streets/sampleStreet/image3.jpg"
+    ]
+  },
+  {
+    "id": "ploshcha-heroiv-maidanu",
+    "lat": 48.505,
+    "lng": 32.27,
+    "title": "Площа Героїв Майдану",
+    "subtitle": "Центральна площа міста",
+    "description": "Центральна площа міста, місце проведення свят та масових заходів. Локація підходить для відпочинку, прогулянок і знайомства з міським життям.",
+    "type": "landmark",
+    "icon": "🏛️",
+    "template": "streets/sampleStreet.html",
+    "footerText": "© Мапа Кропивницького, Імя Призвище учна",
+    "images": [
+      "/images/streets/sampleStreet/image1.jpg",
+      "/images/streets/sampleStreet/image2.jpg",
+      "/images/streets/sampleStreet/image3.jpg"
+    ]
+  }
+]

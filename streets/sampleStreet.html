@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Локація</title>
+    <style>
+        :root {
+            --max-width: 1100px;
+            --gap: 16px
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif
+        }
+
+        body {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #111;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 24px auto 0;
+            padding: 48px 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 12px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12)
+        }
+
+        /* Галерея з трьома фото в один ряд */
+        .gallery {
+            display: flex;
+            gap: var(--gap);
+            flex-wrap: wrap
+        }
+
+        .gallery img {
+            width: calc((100% - (2 * var(--gap))) / 3);
+            height: 220px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08)
+        }
+
+        /* Опис */
+        .description {
+            margin-top: 20px;
+            line-height: 1.6;
+            color: #222
+        }
+
+        /* Адаптивність */
+        @media (max-width:800px) {
+            .gallery img {
+                width: 100%;
+                height: 200px
+            }
+
+            .gallery {
+                flex-direction: column
+            }
+        }
+
+        footer {
+            margin-top: 28px;
+            font-size: 13px;
+            color: #666
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <section>
+            <div class="gallery" id="locationGallery">
+                <!-- Зображення підставляються з JSON -->
+            </div>
+
+            <div class="description" id="locationDescription">
+                <p>Завантаження даних локації...</p>
+            </div>
+
+            <footer id="locationFooter">
+                © Мапа Кропивницького, Імя Призвище учна
+            </footer>
+        </section>
+    </div>
+    <script>
+        async function loadLocationDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const locationId = params.get("id");
+
+            if (!locationId) {
+                document.getElementById("locationDescription").innerHTML =
+                    "<p>Не передано id локації.</p>";
+                return;
+            }
+
+            try {
+                const response = await fetch("../locations.json");
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const locations = await response.json();
+                const location = locations.find((item) => item.id === locationId);
+
+                if (!location) {
+                    document.getElementById("locationDescription").innerHTML =
+                        "<p>Локацію не знайдено у locations.json.</p>";
+                    return;
+                }
+
+                document.title = location.title || "Локація";
+                document.getElementById("locationDescription").innerHTML =
+                    `<p>${location.description || "Опис відсутній."}</p>`;
+                document.getElementById("locationFooter").textContent =
+                    location.footerText || "© Мапа Кропивницького, Імя Призвище учна";
+
+                const gallery = document.getElementById("locationGallery");
+                gallery.innerHTML = "";
+                const images = Array.isArray(location.images) ? location.images : [];
+
+                images.slice(0, 6).forEach((imagePath, index) => {
+                    const img = document.createElement("img");
+                    img.src = imagePath;
+                    img.alt = `${location.title || "Локація"} - фото ${index + 1}`;
+                    gallery.appendChild(img);
+                });
+
+                if (images.length > 0) {
+                    document.body.style.backgroundImage = `url('${images[0]}')`;
+                } else {
+                    document.body.style.backgroundColor = "#f5f1e8";
+                }
+            } catch (error) {
+                console.error("Помилка завантаження деталей локації:", error);
+                document.getElementById("locationDescription").innerHTML =
+                    "<p>Не вдалося завантажити дані локації.</p>";
+            }
+        }
+
+        loadLocationDetails();
+    </script>
+</body>
+
+</html>
