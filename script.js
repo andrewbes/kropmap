@@ -64,9 +64,12 @@ async function initMap() {
   await loadLocations();
 
   const center = [48.5081, 32.2623];
+  const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
+  const initialZoom = isSmallScreen ? 12 : 14;
+
   map = L.map("map", {
     zoomControl: true,
-  }).setView(center, 14);
+  }).setView(center, initialZoom);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
