@@ -89,7 +89,7 @@ async function initMap() {
           <iframe
             src="${detailsPage}?id=${encodeURIComponent(location.id)}"
             title="${location.title}"
-            style="width: 100%; height: 70vh; border: 0; border-radius: 8px;"
+            style="display:block;width:100%;height:100%;min-width:0;min-height:0;border:0;"
             loading="lazy">
           </iframe>
         `

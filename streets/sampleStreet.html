@@ -7,15 +7,22 @@
     <title>Локація</title>
     <style>
         :root {
-            --max-width: 1100px;
             --gap: 16px
         }
 
         html,
         body {
             height: 100%;
+            width: 100%;
             margin: 0;
-            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+            box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
         }
 
         body {
@@ -28,12 +35,14 @@
         }
 
         .container {
-            max-width: var(--max-width);
-            margin: 24px auto 0;
-            padding: 48px 20px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 16px 20px 20px;
             background: rgba(255, 255, 255, 0.85);
-            border-radius: 12px;
-            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12)
+            border-radius: 0;
+            box-shadow: none;
+            min-height: 100%;
         }
 
         /* Галерея з трьома фото в один ряд */
