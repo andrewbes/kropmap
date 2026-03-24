@@ -96,6 +96,16 @@
     </div>
     <script>
         async function loadLocationDetails() {
+            const projectBasePath = window.location.pathname.replace(/\/streets\/sampleStreet\.html$/, "/");
+            const toProjectAssetUrl = (path) => {
+                if (!path) return "";
+                if (/^https?:\/\//i.test(path)) return path;
+                if (path.startsWith("/")) {
+                    return `${projectBasePath}${path.slice(1)}`;
+                }
+                return path;
+            };
+
             const params = new URLSearchParams(window.location.search);
             const locationId = params.get("id");
 
@@ -132,13 +142,13 @@
 
                 images.slice(0, 6).forEach((imagePath, index) => {
                     const img = document.createElement("img");
-                    img.src = imagePath;
+                    img.src = toProjectAssetUrl(imagePath);
                     img.alt = `${location.title || "Локація"} - фото ${index + 1}`;
                     gallery.appendChild(img);
                 });
 
                 if (images.length > 0) {
-                    document.body.style.backgroundImage = `url('${images[0]}')`;
+                    document.body.style.backgroundImage = `url('${toProjectAssetUrl(images[0])}')`;
                 } else {
                     document.body.style.backgroundColor = "#f5f1e8";
                 }
