@@ -96,8 +96,8 @@
     </div>
     <script>
         async function loadLocationDetails() {
-            const pathParts = window.location.pathname.split("/").filter(Boolean);
-            const repoPrefix = pathParts.length > 0 ? `/${pathParts[0]}` : "";
+            const match = window.location.pathname.match(/^(.*)\/streets\/sampleStreet\.html$/);
+            const repoPrefix = match && match[1] ? match[1] : "";
 
             const toProjectAssetUrl = (path) => {
                 if (!path) return "";
@@ -107,7 +107,7 @@
                     if (repoPrefix && path.startsWith(`${repoPrefix}/`)) {
                         return path;
                     }
-                    return `${repoPrefix}${path}`;
+                    return repoPrefix ? `${repoPrefix}${path}` : path;
                 }
                 return path;
             };
