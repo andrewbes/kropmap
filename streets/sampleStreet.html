@@ -96,12 +96,18 @@
     </div>
     <script>
         async function loadLocationDetails() {
-            const projectBasePath = window.location.pathname.replace(/\/streets\/sampleStreet\.html$/, "/");
+            const pathParts = window.location.pathname.split("/").filter(Boolean);
+            const repoPrefix = pathParts.length > 0 ? `/${pathParts[0]}` : "";
+
             const toProjectAssetUrl = (path) => {
                 if (!path) return "";
                 if (/^https?:\/\//i.test(path)) return path;
                 if (path.startsWith("/")) {
-                    return `${projectBasePath}${path.slice(1)}`;
+                    // Для GitHub Pages додаємо назву репозиторію один раз.
+                    if (repoPrefix && path.startsWith(`${repoPrefix}/`)) {
+                        return path;
+                    }
+                    return `${repoPrefix}${path}`;
                 }
                 return path;
             };
