@@ -71,9 +71,13 @@ async function initMap() {
     zoomControl: true,
   }).setView(center, initialZoom);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  // Тайли української спільноти OSM (кордони згідно з законодавством України).
+  // Документація та стилі: https://tile.openstreetmap.org.ua/ · Проєкт: https://openstreetmap.org.ua/
+  L.tileLayer("https://tiles.openstreetmap.org.ua/osm/{z}/{x}/{y}.png", {
     maxZoom: 19,
-    attribution: "&copy; OpenStreetMap contributors",
+    attribution:
+      '&copy; <a href="https://openstreetmap.org.ua/" rel="noopener">OpenStreetMap Україна</a> · ' +
+      '<a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>',
   }).addTo(map);
 
   locations.forEach((location) => {
